@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>دیلم ارتباط | همبستگی و اطلاع‌رسانی</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F4F6F8;
+            --surface: #FFFFFF;
+            --navy: #0F172A;
+            --slate: #334155;
+            --muted: #64748B;
+            --border: #E2E8F0;
+            --teal: #0D9488;
+            --teal-light: #CCFBF1;
+            --teal-dark: #115E59;
+            --olive: #16A34A;
+            --rose: #E11D48;
+            --amber: #D97706;
+            --font-family: 'Vazirmatn', sans-serif;
+            --app-max-width: 480px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--navy);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: var(--app-max-width);
+            background: var(--surface);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 25px rgba(0,0,0,0.05);
+        }
+
+        /* سربرگ */
+        header {
+            padding: 14px 18px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 17px;
+            font-weight: 900;
+            color: var(--navy);
+        }
+
+        header p {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* جستجو */
+        .search-box {
+            padding: 10px 18px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 9px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-size: 12px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--teal);
+        }
+
+        /* بدنه محتوا */
+        main {
+            flex: 1;
+            padding: 16px 18px 90px 18px;
+            overflow-y: auto;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* کارت‌ها */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        .card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--navy);
+        }
+
+        .card p {
+            font-size: 12.5px;
+            color: var(--slate);
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .card .meta {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 10.5px;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: var(--teal-light);
+            color: var(--teal);
+            margin-bottom: 6px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px 10px;
+            color: var(--muted);
+            font-size: 12.5px;
+        }
+
+        /* المان‌های اختصاصی صفحه Home */
+        .home-banner {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            border-radius: 14px;
+            padding: 18px;
+            color: white;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+        }
+
+        .home-banner h2 {
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .home-banner p {
+            font-size: 12px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .section-header h3 {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .section-header a {
+            font-size: 11.5px;
+            color: var(--teal);
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quick-btn {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-btn:active {
+            background: var(--teal-light);
+            border-color: var(--teal);
+            transform: scale(0.96);
+        }
+
+        .quick-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--teal);
+        }
+
+        .quick-btn span {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate);
+        }
+
+        /* فرم‌ها و دکمه‌ها */
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 9px 14px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            background: var(--teal);
+            color: white;
+            transition: opacity 0.2s;
+        }
+
+        .btn:active {
+            opacity: 0.85;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 11.5px;
+            font-weight: 500;
+            color: var(--slate);
+            margin-bottom: 5px;
+        }
+
+        .input-group input, .input-group textarea, .input-group select {
+            width: 100%;
+            padding: 9px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            font-size: 12.5px;
+            outline: none;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* نوار ناوبری پایین با دکمه وسط‌چین یکپارچه */
+        .nav-wrapper {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: var(--app-max-width);
+            z-index: 30;
+            pointer-events: none;
+        }
+
+        .nav {
+            pointer-events: auto;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 6px;
+            position: relative;
+            min-height: 58px;
+        }
+
+        .nav button.nav-btn {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            font-size: 9.5px;
+            color: var(--muted);
+            cursor: pointer;
+            flex: 1;
+            padding: 4px 1px;
+            transition: color 0.15s ease;
+        }
+
+        .nav button.nav-btn.active {
+            color: var(--teal);
+            font-weight: 700;
+        }
+
+        .nav button.nav-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* جایگاه خالی میانی */
+        .nav-center-slot {
+            width: 46px;
+            flex-shrink: 0;
+        }
+
+        /* دکمه وسط نوار پایین */
+        .nav-fab-center {
+            position: absolute;
+            left: 50%;
+            top: -18px;
+            transform: translateX(-50%);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: #ffffff;
+            border: 3.5px solid var(--surface);
+            font-size: 26px;
+            line-height: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.38);
+            cursor: pointer;
+            z-index: 35;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .nav-fab-center:active {
+            transform: translateX(-50%) scale(0.92);
+            background: var(--teal-dark);
+        }
+
+        /* چت‌روم */
+        /* چت‌روم */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 190px);
+    height: calc(100dvh - 190px);
+    min-height: 0;
+    overflow: hidden;
+}
+
+.chat-messages {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 2px 14px;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.msg {
+    max-width: 80%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    flex-shrink: 0;
+}
+
+.msg.me {
+    background: var(--teal-light);
+    color: var(--navy);
+    align-self: flex-start;
+    border-bottom-right-radius: 2px;
+}
+
+.msg.other {
+    background: var(--bg);
+    color: var(--navy);
+    align-self: flex-end;
+    border-bottom-left-radius: 2px;
+}
+
+.chat-input-bar {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 8px;
+    padding-top: 10px;
+    padding-bottom: 2px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.chat-input-bar input {
+    flex: 1;
+    min-width: 0;
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 12.5px;
+    outline: none;
+}
+
+        /* صفحه ورود */
+        .overlay-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--surface);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 30px;
+            max-width: var(--app-max-width);
+            margin: auto;
+        }
+
+        /* باتم شیت ثبت محتوا */
+        .sheet-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 40;
+            display: none;
+        }
+
+        .bottom-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: var(--app-max-width);
+            background: var(--surface);
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            padding: 20px;
+            z-index: 50;
+            transition: transform 0.3s ease-out;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+        }
+
+        .bottom-sheet.open {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* توست پیام */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: var(--navy);
+            color: white;
+            padding: 9px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 200;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* کارت‌های آماری ادمین */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-card .num {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--teal);
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- صفحه لاگین -->
+    <div id="loginScreen" class="overlay-screen">
+        <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 8px;">خوش آمدید</h2>
+        <p style="font-size: 13px; color: var(--muted); margin-bottom: 24px;">برای ورود به شبکه دیلم ارتباط، مشخصات خود را وارد کنید.</p>
+        
+        <div class="input-group">
+            <label>نام و نام خانوادگی</label>
+            <input type="text" id="loginName" placeholder="مثال: علی حسینی">
+        </div>
+
+        <div class="input-group">
+            <label>شماره همراه</label>
+            <input type="tel" id="loginPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" dir="ltr" style="text-align: right;">
+        </div>
+
+        <button class="btn btn-full" onclick="doLogin()" style="margin-top: 8px;">ورود به سامانه</button>
+    </div>
+
+    <!-- سربرگ -->
+    <header>
+        <div>
+            <h1>دیلم ارتباط</h1>
+            <p id="headerSubtitle">همبستگی و اطلاع‌رسانی محلی</p>
+        </div>
+        <button id="adminPanelBtn" class="btn hidden" onclick="goToPage('adminPanel')" style="padding: 6px 12px; font-size: 11px; background: var(--amber);">پنل مدیریت</button>
+    </header>
+
+    <!-- جستجو -->
+    <div class="search-box">
+        <input type="text" placeholder="جستجو در محتوا، خدمات و نیازمندی‌ها..." oninput="filterCards(this.value)">
+    </div>
+
+    <!-- محتوای اصلی -->
+    <main>
+        <!-- صفحه خانه -->
+        <section id="home" class="active">
+            <div class="home-banner">
+                <h2 id="homeWelcomeTitle">سلام به دیلم ارتباط خوش آمدید</h2>
+                <p>پل ارتباطی، نیازمندی‌ها، رویدادها و اخبار دیلمان در یک نگاه.</p>
+            </div>
+
+            <!-- دسترسی سریع -->
+            <div class="section-header">
+                <h3>دسترسی سریع</h3>
+            </div>
+            <div class="quick-grid">
+                <div class="quick-btn" onclick="goToPage('news')">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    <span>اخبار</span>
+                </div>
+                <div class="quick-btn" onclick="goToPage('help')">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <span>هم‌یاری</span>
+                </div>
+                <div class="quick-btn" onclick="goToPage('needs')">
+                    <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm2 4h12v2H6zm3 4h6v2H9z"/></svg>
+                    <span>نیازمندی</span>
+                </div>
+                <div class="quick-btn" onclick="goToPage('business')">
+                    <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                    <span>کسب‌وکار</span>
+                </div>
+            </div>
+
+            <!-- آخرین اطلاعیه‌ها -->
+            <div class="section-header">
+                <h3>تازه‌ترین خبرها</h3>
+                <a onclick="goToPage('news')">مشاهده همه</a>
+            </div>
+            <div id="homeRecentNews"></div>
+
+            <!-- آخرین پست‌ها -->
+            <div class="section-header" style="margin-top: 15px;">
+                <h3>تازه ترین آگهی‌ها و رویدادها</h3>
+            </div>
+            <div id="homeRecentPosts"></div>
+        </section>
+
+        <!-- اطلاعیه‌ها -->
+        <section id="news">
+            <div id="newsList"></div>
+        </section>
+
+        <!-- هم‌یاری -->
+        <section id="help">
+            <div id="helpList"></div>
+        </section>
+
+        <!-- کسب‌وکار -->
+        <section id="business">
+            <div id="businessList"></div>
+        </section>
+
+        <!-- نیازمندی‌ها -->
+        <section id="needs">
+            <div id="needsList"></div>
+        </section>
+
+        <!-- رویدادها -->
+        <section id="events">
+            <div id="eventsList"></div>
+        </section>
+
+        <!-- گفت‌وگو -->
+        <section id="chat">
+            <div class="chat-container">
+                <div class="chat-messages" id="chatBox"></div>
+                <div class="chat-input-bar">
+                    <input type="text" id="chatInput" placeholder="پیام خود را بنویسید..." onkeypress="if(event.key==='Enter') sendChat()">
+                    <button class="btn" onclick="sendChat()">ارسال</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- پروفایل -->
+        <section id="profile">
+            <div class="card" style="text-align: center; padding: 24px 14px;">
+                <h3 id="pName" style="font-size: 18px;">-</h3>
+                <p id="pPhone" style="color: var(--muted); margin-top: 4px;" dir="ltr">-</p>
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 8px;">
+                    <button id="adminQuickBtn" class="btn hidden" onclick="goToPage('adminPanel')" style="background: var(--amber);">ورود به پنل مدیریت</button>
+                    <button class="btn" onclick="logout()" style="background: var(--rose);">خروج از حساب</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- پنل ادمین -->
+        <section id="adminPanel">
+            <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">داشبورد نظارت مدیر</h2>
+            
+            <div class="card" style="border: 2px solid var(--teal); margin-bottom: 20px;">
+                <h3 style="font-size: 14px; margin-bottom: 10px;">ارسال خبر جدید</h3>
+                <div class="input-group" style="margin-bottom: 8px;">
+                    <input type="text" id="adminNewsTitle" placeholder="عنوان خبر...">
+                </div>
+                <div class="input-group" style="margin-bottom: 8px;">
+                    <textarea id="adminNewsBody" placeholder="متن خبر..."></textarea>
+                </div>
+                <button class="btn btn-full" onclick="publishAdminNews()">انتشار در اخبار</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div style="font-size: 12px; color: var(--muted);">تعداد کاربران</div>
+                    <div class="num" id="userCount">۰</div>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 12px; color: var(--muted);">کل پست‌ها</div>
+                    <div class="num" id="postCount">۰</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 16px;">
+                <button class="btn" onclick="loadAdminPosts()" style="font-size: 11px; padding: 8px 4px;">تأیید پست‌ها</button>
+                <button class="btn" onclick="loadAdminUsers()" style="font-size: 11px; padding: 8px 4px; background: var(--slate);">کاربران</button>
+                <button class="btn" onclick="loadAdminChat()" style="font-size: 11px; padding: 8px 4px; background: var(--rose);">مدیریت چت</button>
+            </div>
+
+            <div id="adminResult"></div>
+        </section>
+    </main>
+
+    <!-- نوار ناوبری پایین به همراه دکمه برجسته در مرکز -->
+    <div class="nav-wrapper">
+        <nav class="nav">
+            <!-- سمت راست نوار -->
+            <button class="nav-btn active" data-nav="home" onclick="goToPage('home')">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                خانه
+            </button>
+            <button class="nav-btn" data-nav="news" onclick="goToPage('news')">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                اخبار
+            </button>
+            <button class="nav-btn" data-nav="help" onclick="goToPage('help')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                هم‌یاری
+            </button>
+            <button class="nav-btn" data-nav="business" onclick="goToPage('business')">
+                <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                کسب‌وکار
+            </button>
+
+            <!-- فضای خالی مرکز برای دکمه مثبت -->
+            <div class="nav-center-slot"></div>
+
+            <!-- دکمه شناور مرکز نوار -->
+            <button class="nav-fab-center" onclick="openSheet()" title="ارسال مطلب">+</button>
+
+            <!-- سمت چپ نوار -->
+            <button class="nav-btn" data-nav="needs" onclick="goToPage('needs')">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm2 4h12v2H6zm3 4h6v2H9z"/></svg>
+                نیازمندی
+            </button>
+            <button class="nav-btn" data-nav="events" onclick="goToPage('events')">
+                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                رویدادها
+            </button>
+            <button class="nav-btn" data-nav="chat" onclick="goToPage('chat')">
+                <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                گفت‌وگو
+            </button>
+            <button class="nav-btn" data-nav="profile" onclick="goToPage('profile')">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                پروفایل
+            </button>
+        </nav>
+    </div>
+
+    <!-- باتم شیت ثبت محتوا -->
+    <div id="sheetOverlay" class="sheet-overlay" onclick="closeSheet()"></div>
+    <div id="sheet" class="bottom-sheet">
+        <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 12px;">ارسال مطلب جدید</h3>
+        
+        <div class="input-group">
+            <label>دسته‌بندی</label>
+            <select id="postType">
+                <option value="help">هم‌یاری</option>
+                <option value="business">کسب‌وکار</option>
+                <option value="need">نیازمندی</option>
+                <option value="event">رویداد</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>عنوان</label>
+            <input type="text" id="postTitle" placeholder="عنوان مورد نظر...">
+        </div>
+
+        <div class="input-group">
+            <label>توضیحات</label>
+            <textarea id="postBody" placeholder="متن کامل پیام یا آگهی..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 14px;">
+            <button class="btn btn-full" onclick="submitSheet()">ارسال برای تایید</button>
+            <button class="btn" onclick="closeSheet()" style="background: var(--bg); color: var(--slate); border: 1px solid var(--border);">انصراف</button>
+        </div>
+    </div>
+
+    <!-- پیام توست -->
+    <div id="toast" class="toast"></div>
+
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbxlReRJun7e4SJ2dkYco93YlUNeWCrqYCEzh1GR7ssZKLZbTwW62vASyQJHh6vTUNIv6g/exec";
+
+let currentUser = null;
+
+/* =========================
+   API
+========================= */
+
+async function apiCall(action, data = {}, method = 'GET') {
+    try {
+        let response;
+
+        if (method === 'GET') {
+            const query = new URLSearchParams({ action, ...data }).toString();
+            response = await fetch(`${API_URL}?${query}`);
+        } else {
+            response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify({ action, ...data })
+            });
+        }
+
+        const result = await response.json();
+
+        if (!result.success) {
+            const errorMessage = result.error || 'خطا در عملیات';
+
+            if (
+                errorMessage.includes('نشست') ||
+                errorMessage.includes('دوباره وارد شوید') ||
+                errorMessage.includes('زمان نشست')
+            ) {
+                handleInvalidSession(errorMessage);
+            } else {
+                showToast(errorMessage);
+            }
+
+            return null;
+        }
+
+        return result.data;
+
+    } catch (error) {
+        console.error(error);
+        showToast('خطا در ارتباط با سرور');
+        return null;
+    }
+}
+
+function authData() {
+    return {
+        sessionToken: currentUser?.sessionToken || ''
+    };
+}
+
+/* =========================
+   Security / Session
+========================= */
+
+function handleInvalidSession(message) {
+    localStorage.removeItem('deylamUser');
+    currentUser = null;
+
+    document.getElementById('loginScreen').classList.remove('hidden');
+    showToast(message || 'نشست شما پایان یافته است. لطفاً دوباره وارد شوید.');
+}
+
+async function doLogin() {
+    const name = document.getElementById('loginName').value.trim();
+    const phone = normalizePhone(document.getElementById('loginPhone').value);
+
+    if (!name || !/^09\d{9}$/.test(phone)) {
+        return showToast('اطلاعات معتبر نیست؛ شماره باید ۱۱ رقمی و با ۰۹ شروع شود.');
+    }
+
+    const user = await apiCall('login', { name, phone }, 'POST');
+
+    if (!user || !user.sessionToken) return;
+
+    currentUser = user;
+    localStorage.setItem('deylamUser', JSON.stringify(user));
+
+    unlockApp();
+
+    if (user.isNewUser) {
+        showToast('حساب شما با موفقیت ایجاد شد.');
+    } else {
+        showToast('با موفقیت وارد شدید.');
+    }
+}
+
+async function unlockApp() {
+    if (!currentUser) return;
+
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('pName').textContent = currentUser.name || '-';
+    document.getElementById('pPhone').textContent = currentUser.phone || '-';
+
+    const welcomeEl = document.getElementById('homeWelcomeTitle');
+
+    if (welcomeEl) {
+        welcomeEl.textContent = `سلام ${currentUser.name}، خوش آمدید`;
+    }
+
+    await checkAdminStatus();
+    loadAll();
+}
+
+async function verifySavedSession() {
+    const saved = localStorage.getItem('deylamUser');
+
+    if (!saved) return;
+
+    try {
+        const storedUser = JSON.parse(saved);
+
+        if (!storedUser.sessionToken) {
+            localStorage.removeItem('deylamUser');
+            return;
+        }
+
+        const verifiedUser = await apiCall(
+            'verifySession',
+            { sessionToken: storedUser.sessionToken },
+            'POST'
+        );
+
+        if (!verifiedUser) {
+            localStorage.removeItem('deylamUser');
+            return;
+        }
+
+        currentUser = verifiedUser;
+        localStorage.setItem('deylamUser', JSON.stringify(verifiedUser));
+
+        unlockApp();
+
+    } catch (error) {
+        console.error(error);
+        localStorage.removeItem('deylamUser');
+    }
+}
+
+async function logout() {
+    const token = currentUser?.sessionToken;
+
+    if (token) {
+        await apiCall('logout', { sessionToken: token }, 'POST');
+    }
+
+    localStorage.removeItem('deylamUser');
+    currentUser = null;
+    location.reload();
+}
+
+/* =========================
+   Admin
+========================= */
+
+async function checkAdminStatus() {
+    const isAdmin = currentUser && currentUser.isAdmin === true;
+
+    if (isAdmin) {
+        document.getElementById('adminPanelBtn').classList.remove('hidden');
+        document.getElementById('adminQuickBtn').classList.remove('hidden');
+        document.getElementById('headerSubtitle').textContent = 'خوش آمدید مدیر محترم';
+        loadAdminStatsAndData();
+    } else {
+        document.getElementById('adminPanelBtn').classList.add('hidden');
+        document.getElementById('adminQuickBtn').classList.add('hidden');
+        document.getElementById('headerSubtitle').textContent = 'همبستگی و اطلاع‌رسانی محلی';
+    }
+}
+
+async function loadAdminStatsAndData() {
+    if (!currentUser?.isAdmin) return;
+
+    const stats = await apiCall('getAdminStats', authData());
+
+    if (stats) {
+        document.getElementById('userCount').textContent = toPersianNumber(stats.users ?? 0);
+        document.getElementById('postCount').textContent = toPersianNumber(stats.posts ?? 0);
+    }
+}
+
+async function publishAdminNews() {
+    if (!currentUser?.isAdmin) {
+        return showToast('شما دسترسی مدیر ندارید.');
+    }
+
+    const title = document.getElementById('adminNewsTitle').value.trim();
+    const body = document.getElementById('adminNewsBody').value.trim();
+
+    if (!title || !body) {
+        return showToast('عنوان و متن خبر الزامی است.');
+    }
+
+    const res = await apiCall('addNews', {
+        ...authData(),
+        title,
+        body
+    }, 'POST');
+
+    if (res) {
+        showToast('خبر با موفقیت منتشر شد.');
+
+        document.getElementById('adminNewsTitle').value = '';
+        document.getElementById('adminNewsBody').value = '';
+
+        loadAll();
+    }
+}
+
+async function loadAdminPosts() {
+    if (!currentUser?.isAdmin) return;
+
+    const resultBox = document.getElementById('adminResult');
+    resultBox.innerHTML = '<div class="card">در حال دریافت پست‌های در انتظار...</div>';
+
+    const posts = await apiCall('getPendingPosts', authData());
+
+    if (!posts || posts.length === 0) {
+        resultBox.innerHTML = '<div class="card">پست جدیدی برای تأیید وجود ندارد.</div>';
+        return;
+    }
+
+    const typesFa = {
+        help: 'هم‌یاری',
+        business: 'کسب‌وکار',
+        need: 'نیازمندی',
+        event: 'رویداد'
+    };
+
+    resultBox.innerHTML = posts.map(p => `
+        <div class="card">
+            <span class="tag">${escapeHtml(typesFa[p.type] || p.type || '')}</span>
+            <h3>${escapeHtml(p.title || '')}</h3>
+            <p>${escapeHtml(p.body || '')}</p>
+            <div class="meta">
+                ${escapeHtml(p.author || '')}
+                |
+                ${formatDate(p.createdAt)}
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:10px;">
+                <button class="btn" onclick="approvePost(${Number(p.rowNumber)})" style="background:var(--olive); flex:1;">تأیید</button>
+                <button class="btn" onclick="removePost(${Number(p.rowNumber)})" style="background:var(--rose); flex:1;">حذف</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function approvePost(rowNumber) {
+    const result = await apiCall('updatePostStatus', {
+        ...authData(),
+        rowNumber,
+        status: 'approved'
+    }, 'POST');
+
+    if (result) {
+        showToast('پست تأیید شد.');
+        loadAdminPosts();
+        loadAll();
+        loadAdminStatsAndData();
+    }
+}
+
+async function removePost(rowNumber) {
+    if (!confirm('آیا از حذف این پست اطمینان دارید؟')) return;
+
+    const result = await apiCall('deletePost', {
+        ...authData(),
+        rowNumber
+    }, 'POST');
+
+    if (result) {
+        showToast('پست حذف شد.');
+        loadAdminPosts();
+        loadAll();
+        loadAdminStatsAndData();
+    }
+}
+
+async function loadAdminUsers() {
+    if (!currentUser?.isAdmin) return;
+
+    const resultBox = document.getElementById('adminResult');
+    resultBox.innerHTML = '<div class="card">در حال دریافت کاربران...</div>';
+
+    const users = await apiCall('getAllUsers', authData());
+
+    if (!users || users.length === 0) {
+        resultBox.innerHTML = '<div class="card">هنوز کاربری ثبت نشده است.</div>';
+        return;
+    }
+
+    resultBox.innerHTML = users.map(user => `
+        <div class="card">
+            <h3>${escapeHtml(user.name || '')}</h3>
+            <p dir="ltr" style="text-align:right;">${escapeHtml(user.phone || '')}</p>
+            <div class="meta">${formatDate(user.createdAt)}</div>
+        </div>
+    `).join('');
+}
+
+async function loadAdminChat() {
+    if (!currentUser?.isAdmin) return;
+
+    const resultBox = document.getElementById('adminResult');
+    resultBox.innerHTML = '<div class="card">در حال دریافت پیام‌ها...</div>';
+
+    const msgs = await apiCall('getChat');
+
+    if (!msgs || msgs.length === 0) {
+        resultBox.innerHTML = '<div class="card">پیامی وجود ندارد.</div>';
+        return;
+    }
+
+    resultBox.innerHTML = msgs.map(m => `
+        <div class="card" style="padding:10px;">
+            <div style="font-size:11px; font-weight:bold; color:var(--teal)">
+                ${escapeHtml(m.name || '')}
+            </div>
+
+            <div style="font-size:13px; margin:5px 0;">
+                ${escapeHtml(m.message || '')}
+            </div>
+
+            <button
+                class="btn"
+                onclick="deleteChat(${Number(m.rowNumber)})"
+                style="background:var(--rose); padding:4px 8px; font-size:11px;"
+            >
+                حذف پیام
+            </button>
+        </div>
+    `).join('');
+}
+
+async function deleteChat(rowNumber) {
+    if (!confirm('آیا پیام حذف شود؟')) return;
+
+    const result = await apiCall('adminDeleteChat', {
+        ...authData(),
+        rowNumber
+    }, 'POST');
+
+    if (result) {
+        showToast('پیام با موفقیت حذف شد.');
+        loadAdminChat();
+    }
+}
+
+/* =========================
+   Home / Posts / News
+========================= */
+
+function loadAll() {
+    loadHomeData();
+    loadPosts('news', 'newsList');
+    loadPosts('help', 'helpList');
+    loadPosts('business', 'businessList');
+    loadPosts('need', 'needsList');
+    loadPosts('event', 'eventsList');
+    loadChat();
+}
+
+async function loadHomeData() {
+    const newsBox = document.getElementById('homeRecentNews');
+
+    if (newsBox) {
+        const news = await apiCall('getNews');
+
+        if (news && news.length) {
+            newsBox.innerHTML = news.slice(0, 2).map(p => `
+                <div class="card searchable">
+                    <span class="tag">اطلاعیه</span>
+                    <h3>${escapeHtml(p.title || '')}</h3>
+                    <p>${escapeHtml(shortText(p.body || '', 120))}</p>
+                    <div class="meta">
+                        <span>مدیریت</span>
+                        <span>${formatDate(p.createdAt)}</span>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            newsBox.innerHTML = '<div class="empty">خبری ثبت نشده است.</div>';
+        }
+    }
+
+    const recentPostsBox = document.getElementById('homeRecentPosts');
+
+    if (recentPostsBox) {
+        const allPosts = await apiCall('getPosts', { type: '' });
+
+        if (allPosts && allPosts.length) {
+            const typesFa = {
+                help: 'هم‌یاری',
+                business: 'کسب‌وکار',
+                need: 'نیازمندی',
+                event: 'رویداد'
+            };
+
+            recentPostsBox.innerHTML = allPosts.slice(0, 3).map(p => `
+                <div class="card searchable">
+                    <span class="tag">${escapeHtml(typesFa[p.type] || p.type || '')}</span>
+                    <h3>${escapeHtml(p.title || '')}</h3>
+                    <p>${escapeHtml(shortText(p.body || '', 120))}</p>
+                    <div class="meta">
+                        <span>${escapeHtml(p.author || '')}</span>
+                        <span>${formatDate(p.createdAt)}</span>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            recentPostsBox.innerHTML = '<div class="empty">موردی یافت نشد.</div>';
+        }
+    }
+}
+
+async function loadPosts(type, boxId) {
+    const box = document.getElementById(boxId);
+
+    if (!box) return;
+
+    const action = type === 'news' ? 'getNews' : 'getPosts';
+    const data = type === 'news' ? {} : { type };
+
+    const posts = await apiCall(action, data);
+
+    if (posts && posts.length) {
+        const typesFa = {
+            help: 'هم‌یاری',
+            business: 'کسب‌وکار',
+            need: 'نیازمندی',
+            event: 'رویداد'
+        };
+
+        box.innerHTML = posts.map(p => `
+            <div class="card searchable">
+                ${p.type ? `<span class="tag">${escapeHtml(typesFa[p.type] || p.type)}</span>` : ''}
+                <h3>${escapeHtml(p.title || '')}</h3>
+                <p>${escapeHtml(p.body || '')}</p>
+                <div class="meta">
+                    <span>${escapeHtml(p.author || 'مدیریت')}</span>
+                    <span>${formatDate(p.createdAt)}</span>
+                </div>
+            </div>
+        `).join('');
+    } else {
+        box.innerHTML = '<div class="empty">موردی یافت نشد.</div>';
+    }
+}
+
+/* =========================
+   Chat
+========================= */
+
+async function loadChat() {
+    const box = document.getElementById('chatBox');
+    const msgs = await apiCall('getChat');
+
+    if (!msgs || !box || !currentUser) return;
+
+    box.innerHTML = msgs.map(m => {
+        const isMe = m.phone && m.phone === currentUser.phone;
+
+        return `
+            <div class="msg ${isMe ? 'me' : 'other'}">
+                <div style="font-size:10px; font-weight:bold; color:var(--teal); margin-bottom:2px;">
+                    ${escapeHtml(m.name || '')}
+                </div>
+                <div>${escapeHtml(m.message || '')}</div>
+            </div>
+        `;
+    }).join('');
+
+    box.scrollTop = box.scrollHeight;
+}
+
+async function sendChat() {
+    if (!currentUser?.sessionToken) {
+        return handleInvalidSession('لطفاً ابتدا وارد حساب خود شوید.');
+    }
+
+    const inp = document.getElementById('chatInput');
+    const message = inp.value.trim();
+
+    if (!message) return;
+
+    const result = await apiCall('sendChat', {
+        ...authData(),
+        message
+    }, 'POST');
+
+    if (result) {
+        inp.value = '';
+        loadChat();
+    }
+}
+
+/* =========================
+   Add post sheet
+========================= */
+
+function openSheet() {
+    if (!currentUser?.sessionToken) {
+        return handleInvalidSession('لطفاً ابتدا وارد حساب خود شوید.');
+    }
+
+    document.getElementById('sheetOverlay').style.display = 'block';
+    document.getElementById('sheet').classList.add('open');
+}
+
+function closeSheet() {
+    document.getElementById('sheetOverlay').style.display = 'none';
+    document.getElementById('sheet').classList.remove('open');
+}
+
+async function submitSheet() {
+    if (!currentUser?.sessionToken) {
+        return handleInvalidSession('لطفاً ابتدا وارد حساب خود شوید.');
+    }
+
+    const title = document.getElementById('postTitle').value.trim();
+    const body = document.getElementById('postBody').value.trim();
+    const type = document.getElementById('postType').value;
+
+    if (!title || !body) {
+        return showToast('لطفاً همه فیلدها را پر کنید.');
+    }
+
+    const result = await apiCall('addPost', {
+        ...authData(),
+        type,
+        title,
+        body
+    }, 'POST');
+
+    if (result) {
+        showToast('ارسال شد و پس از تأیید مدیر نمایش داده می‌شود.');
+        closeSheet();
+
+        document.getElementById('postTitle').value = '';
+        document.getElementById('postBody').value = '';
+    }
+}
+
+/* =========================
+   Navigation / UI
+========================= */
+
+function goToPage(id) {
+    document.querySelectorAll('main section').forEach(section => {
+        section.classList.remove('active');
+    });
+
+    const target = document.getElementById(id);
+
+    if (target) {
+        target.classList.add('active');
+    }
+
+    document.querySelectorAll('.nav button.nav-btn').forEach(button => {
+        button.classList.remove('active');
+    });
+
+    const navButton = document.querySelector(
+        `.nav button.nav-btn[data-nav="${id}"]`
+    );
+
+    if (navButton) {
+        navButton.classList.add('active');
+    }
+
+    if (id === 'home') loadHomeData();
+    if (id === 'chat') loadChat();
+
+    if (id === 'adminPanel') {
+        if (!currentUser?.isAdmin) {
+            showToast('شما اجازه ورود به پنل مدیریت را ندارید.');
+            goToPage('home');
+            return;
+        }
+
+        loadAdminStatsAndData();
+    }
+}
+
+function filterCards(q) {
+    const query = String(q || '').toLowerCase();
+
+    const cards = document.querySelectorAll(
+        'main section.active .card.searchable'
+    );
+
+    cards.forEach(card => {
+        card.style.display = card.textContent.toLowerCase().includes(query)
+            ? 'block'
+            : 'none';
+    });
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+
+    toast.textContent = message;
+    toast.classList.add('show');
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 2500);
+}
+
+/* =========================
+   Helpers
+========================= */
+
+function normalizePhone(value) {
+    const faDigits = '۰۱۲۳۴۵۶۷۸۹';
+    const arDigits = '٠١٢٣٤٥٦٧٨٩';
+
+    let phone = String(value || '').trim();
+
+    phone = phone.replace(/[۰-۹]/g, char => faDigits.indexOf(char));
+    phone = phone.replace(/[٠-٩]/g, char => arDigits.indexOf(char));
+
+    return phone
+        .replace(/[^\d]/g, '')
+        .replace(/^98/, '0');
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function shortText(text, maxLength) {
+    const value = String(text || '');
+
+    return value.length > maxLength
+        ? value.substring(0, maxLength) + '...'
+        : value;
+}
+
+function formatDate(value) {
+    if (!value) return '';
+
+    const date = new Date(value);
+
+    if (isNaN(date.getTime())) return '';
+
+    return date.toLocaleDateString('fa-IR');
+}
+
+function toPersianNumber(value) {
+    return String(value).replace(/\d/g, digit => '۰۱۲۳۴۵۶۷۸۹'[digit]);
+}
+
+/* =========================
+   Start app
+========================= */
+
+(function init() {
+    verifySavedSession();
+})();
+</script>

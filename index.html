@@ -1065,7 +1065,7 @@
             <div id="adminResult"></div>
         </section>
 <!-- صفحه گفتگوی خصوصی -->
-<section id="privateChatPage" style="display: none;">
+<section id="privateChatPage">
     <h2 id="privateChatTitle" style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">
         گفتگو با مدیریت
     </h2>
@@ -1946,9 +1946,9 @@ async function sendPrivateMsg() {
     input.disabled = true;
 
     let reqData = {
-    sessionToken: authData().sessionToken,
-    message: msg
-};
+        sessionToken: authData().sessionToken,
+        message: text
+    };
     
     if (currentPrivateTargetPhone) {
         reqData.targetPhone = currentPrivateTargetPhone;

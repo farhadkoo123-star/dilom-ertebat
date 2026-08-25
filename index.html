@@ -217,7 +217,7 @@
 
         .quick-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
             gap: 10px;
             margin-bottom: 20px;
         }
@@ -390,88 +390,273 @@
         }
 
         /* چت‌روم */
-        /* چت‌روم */
-.chat-container {
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 190px);
-    height: calc(100dvh - 190px);
-    min-height: 0;
-    overflow: hidden;
-}
-
-.chat-messages {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px 2px 14px;
-    scroll-behavior: smooth;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-}
-
-.msg {
-    max-width: 80%;
-    padding: 10px 12px;
-    border-radius: 12px;
-    font-size: 12.5px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    flex-shrink: 0;
-}
-
-.msg.me {
-    background: var(--teal-light);
-    color: var(--navy);
-    align-self: flex-start;
-    border-bottom-right-radius: 2px;
-}
-
-.msg.other {
-    background: var(--bg);
-    color: var(--navy);
-    align-self: flex-end;
-    border-bottom-left-radius: 2px;
-}
-
-.chat-input-bar {
-    flex: 0 0 auto;
-    display: flex;
-    gap: 8px;
-    padding-top: 10px;
-    padding-bottom: 2px;
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-}
-
-.chat-input-bar input {
-    flex: 1;
-    min-width: 0;
-    padding: 9px 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-size: 12.5px;
-    outline: none;
-}
-
-        /* صفحه ورود */
-        .overlay-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--surface);
-            z-index: 100;
+        .chat-container {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            padding: 30px;
-            max-width: var(--app-max-width);
-            margin: auto;
+            height: calc(100vh - 190px);
+            height: calc(100dvh - 190px);
+            min-height: 0;
+            overflow: hidden;
         }
+
+        .chat-messages {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px 2px 14px;
+            scroll-behavior: smooth;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .msg {
+            max-width: 80%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            flex-shrink: 0;
+        }
+
+        .msg.me {
+            background: var(--teal-light);
+            color: var(--navy);
+            align-self: flex-start;
+            border-bottom-right-radius: 2px;
+        }
+
+        .msg.other {
+            background: var(--bg);
+            color: var(--navy);
+            align-self: flex-end;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-input-bar {
+            flex: 0 0 auto;
+            display: flex;
+            gap: 8px;
+            padding-top: 10px;
+            padding-bottom: 2px;
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .chat-input-bar input {
+            flex: 1;
+            min-width: 0;
+            padding: 9px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 12.5px;
+            outline: none;
+        }
+
+        /* ==============================================
+   🌟 استایل‌های تجملی و سلطنتی صفحه ورود 
+   ============================================== */
+.overlay-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    max-width: var(--app-max-width);
+    margin: auto;
+    /* پس‌زمینه کهکشانی با نورهای نئونی ملایم */
+    background: radial-gradient(circle at 10% 15%, #142823 0%, #09121d 60%, #060b11 100%);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+/* افکت نورهای ارواحی پس‌زمینه */
+.overlay-screen::before {
+    content: '';
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(13, 148, 136, 0.35) 0%, rgba(217, 119, 6, 0.15) 60%, transparent 70%);
+    top: -60px;
+    right: -50px;
+    border-radius: 50%;
+    filter: blur(50px);
+    pointer-events: none;
+}
+
+.overlay-screen::after {
+    content: '';
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, rgba(217, 119, 6, 0.25) 0%, transparent 70%);
+    bottom: -50px;
+    left: -40px;
+    border-radius: 50%;
+    filter: blur(45px);
+    pointer-events: none;
+}
+
+/* کارت شیشه‌ای شناور و مجلل */
+.lux-card {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    background: rgba(18, 28, 41, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 215, 0, 0.35); /* خط طلایی باریک بالای کارت */
+    border-radius: 28px;
+    padding: 32px 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(13, 148, 136, 0.15);
+    text-align: center;
+}
+
+/* نشان تجاری لوکس بالای صفحه ورود */
+.lux-badge {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 16px auto;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #0d9488 0%, #064e3b 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid rgba(255, 215, 0, 0.5);
+    box-shadow: 0 10px 25px rgba(13, 148, 136, 0.4), inset 0 0 12px rgba(255, 215, 0, 0.3);
+}
+
+.lux-badge svg {
+    width: 34px;
+    height: 34px;
+    fill: #fef08a;
+}
+
+.lux-title {
+    font-size: 30px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+    background: linear-gradient(180deg, #ffffff 40%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.lux-subtitle {
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+/* استایل ورودی‌های اختصاصی و شیک */
+.lux-input-group {
+    text-align: right;
+    margin-bottom: 16px;
+}
+
+.lux-input-group label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 6px;
+    padding-right: 4px;
+}
+
+.lux-input-group input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(15, 23, 42, 0.6);
+    color: #f8fafc;
+    font-size: 13.5px;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+.lux-input-group input:focus {
+    border-color: #2dd4bf;
+    background: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.18), 0 4px 14px rgba(0,0,0,0.3);
+}
+
+.lux-input-group input::placeholder {
+    color: #475569;
+}
+
+/* ورودی کد پیامک شده با استایل VIP */
+.lux-otp-input {
+    letter-spacing: 12px !important;
+    font-size: 22px !important;
+    font-weight: 900 !important;
+    color: #fef08a !important;
+    border-color: rgba(217, 119, 6, 0.4) !important;
+    background: rgba(20, 29, 44, 0.8) !important;
+    text-align: center !important;
+}
+
+.lux-otp-input:focus {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2) !important;
+}
+
+/* دکمه‌های پر زرق و برق و فاخر */
+.btn-lux-primary {
+    width: 100%;
+    height: 48px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #044e46 100%);
+    color: #ffffff;
+    font-size: 13.5px;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(13, 148, 136, 0.4), inset 0 1px 1px rgba(255,255,255,0.3);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-lux-primary:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 10px rgba(13, 148, 136, 0.3);
+}
+
+/* دکمه ثانویه / بازگشت */
+.btn-lux-secondary {
+    width: 100%;
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: #94a3b8;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+.btn-lux-secondary:active {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+}
 
         /* باتم شیت ثبت محتوا */
         .sheet-overlay {
@@ -548,11 +733,187 @@
             color: var(--teal);
             margin-top: 4px;
         }
+
+
+        /* پوستهٔ روشن صفحهٔ ورود */
+        .overlay-screen {
+            background: #F4F7F8;
+            color: #0F172A;
+        }
+
+        .overlay-screen::before,
+        .overlay-screen::after {
+            display: none;
+        }
+
+        .lux-card {
+            background: #FFFFFF;
+            border: 1px solid #D7E3E5;
+            border-top: 3px solid #0D9488;
+            border-radius: 20px;
+            box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        .lux-badge {
+            background: #CCFBF1;
+            border: 1px solid #99E6DC;
+            box-shadow: 0 8px 18px rgba(13, 148, 136, 0.16);
+        }
+
+        .lux-badge svg {
+            fill: #0F766E;
+        }
+
+        .lux-title {
+            color: #0F172A;
+            background: none;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: #0F172A;
+        }
+
+        .lux-subtitle {
+            color: #64748B;
+        }
+
+        .lux-input-group label {
+            color: #334155;
+        }
+
+        .lux-input-group input {
+            border: 1px solid #CBD5E1;
+            background: #F8FAFC;
+            color: #0F172A;
+        }
+
+        .lux-input-group input:focus {
+            border-color: #0D9488;
+            background: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.14);
+        }
+
+        .lux-input-group input::placeholder {
+            color: #94A3B8;
+        }
+
+        .lux-otp-input {
+            color: #0F766E !important;
+            border-color: #99E6DC !important;
+            background: #F0FDFA !important;
+        }
+
+        .lux-otp-input:focus {
+            border-color: #0D9488 !important;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.14) !important;
+        }
+
+        .btn-lux-primary {
+            background: #0D9488;
+            color: #FFFFFF;
+            box-shadow: 0 8px 18px rgba(13, 148, 136, 0.24);
+        }
+
+        .btn-lux-primary:active {
+            box-shadow: 0 4px 10px rgba(13, 148, 136, 0.20);
+        }
+
+        .btn-lux-secondary {
+            border: 1px solid #CBD5E1;
+            background: #FFFFFF;
+            color: #475569;
+        }
+
+        .btn-lux-secondary:active {
+            background: #F1F5F9;
+            color: #0F172A;
+        }
+
+        /* رنگ دکمهٔ تأیید کد که در HTML به‌صورت inline تعیین شده است */
+        #loginStep2 .btn-lux-primary {
+            background: #0D9488 !important;
+            box-shadow: 0 8px 18px rgba(13, 148, 136, 0.24) !important;
+        }
+
+.chat-bubble {
+    max-width: 80%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.chat-bubble.me {
+    background-color: var(--teal);
+    color: white;
+    align-self: flex-start; /* چون راست چینه، این سمت راست میفته */
+    border-bottom-right-radius: 0;
+}
+.chat-bubble.other {
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--slate);
+    align-self: flex-end; /* سمت چپ میفته */
+    border-bottom-left-radius: 0;
+}
+.chat-time {
+    font-size: 10px;
+    opacity: 0.8;
+    margin-top: 4px;
+    display: block;
+}
+
     </style>
 </head>
 <body>
 
 <div class="app-container">
+
+        <!-- صفحه لاگین دو مرحله‌ای لوکس و اشرافی -->
+    <div id="loginScreen" class="overlay-screen">
+        <div class="lux-card">
+            
+            <!-- بج طلایی نماد سامانه -->
+            <div class="lux-badge">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l-8.5-4.25L12 11.5l8.5-4.75L12 11zm0 4.5l-8.5-4.25L12 16l8.5-4.75L12 15.5zm0 4.5l-8.5-4.25L12 20.5l8.5-4.75L12 20z"/></svg>
+            </div>
+
+            <h2 class="lux-title">دیلم ارتباط</h2>
+            <p class="lux-subtitle">درگاه اختصاصی ارتباطات و تبادلات همشهریان</p>
+            
+            <!-- فاز اول: دریافت نام و شماره -->
+            <div id="loginStep1">
+                <div class="lux-input-group">
+                    <label>نام و نام خانوادگی</label>
+                    <input type="text" id="loginName" placeholder="مثال: علی حسینی" autocomplete="name">
+                </div>
+
+                <div class="lux-input-group">
+                    <label>شماره تماس همراه</label>
+                    <input type="tel" id="loginPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" dir="ltr" style="text-align: right;" autocomplete="tel">
+                </div>
+
+                <button class="btn-lux-primary" onclick="requestOtpCode()" style="margin-top: 12px;">
+                    دریافت کد تایید اختصاصی
+                </button>
+            </div>
+
+            <!-- فاز دوم: تایید کد ارسالی OTP -->
+            <div id="loginStep2" class="hidden">
+                <div class="lux-input-group">
+                    <label style="text-align: center;">رمز یک‌بار مصرف ارسالی</label>
+                    <input type="tel" id="loginOtpCode" class="lux-otp-input" placeholder="•••••" maxlength="5" dir="ltr">
+                </div>
+
+                <button class="btn-lux-primary" onclick="doLogin()" style="margin-top: 12px; background: linear-gradient(135deg, #d97706 0%, #b45309 100%); box-shadow: 0 8px 20px rgba(217, 119, 6, 0.4);">
+                    ورود ایمن به سامانه
+                </button>
+                <button class="btn-lux-secondary" onclick="backToStep1()">
+                    ویرایش شماره و بازگشت
+                </button>
+            </div>
+
+        </div>
+    </div>
 
     <!-- سربرگ -->
     <header>
@@ -573,7 +934,7 @@
         <!-- صفحه خانه -->
         <section id="home" class="active">
             <div class="home-banner">
-                <h2 id="homeWelcomeTitle">(تست)سلام به دیلم ارتباط خوش آمدید</h2>
+                <h2 id="homeWelcomeTitle">سلام به دیلم ارتباط خوش آمدید</h2>
                 <p>پل ارتباطی، نیازمندی‌ها، رویدادها و اخبار دیلمان در یک نگاه.</p>
             </div>
 
@@ -600,7 +961,7 @@
                 </div>
             </div>
 
-            <!-- (تست)آخرین اطلاعیه‌ها -->
+            <!-- آخرین اطلاعیه‌ها -->
             <div class="section-header">
                 <h3>تازه‌ترین خبرها</h3>
                 <a onclick="goToPage('news')">مشاهده همه</a>
@@ -657,6 +1018,10 @@
                 <p id="pPhone" style="color: var(--muted); margin-top: 4px;" dir="ltr">-</p>
                 <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 8px;">
                     <button id="adminQuickBtn" class="btn hidden" onclick="goToPage('adminPanel')" style="background: var(--amber);">ورود به پنل مدیریت</button>
+<!-- دکمه جدید برای ارتباط با مدیریت -->
+<button class="btn" onclick="openPrivateChat()" style="background: var(--teal);">
+    ارتباط با مدیریت / چت خصوصی
+</button>
                     <button class="btn" onclick="logout()" style="background: var(--rose);">خروج از حساب</button>
                 </div>
             </div>
@@ -692,10 +1057,34 @@
                 <button class="btn" onclick="loadAdminPosts()" style="font-size: 11px; padding: 8px 4px;">تأیید پست‌ها</button>
                 <button class="btn" onclick="loadAdminUsers()" style="font-size: 11px; padding: 8px 4px; background: var(--slate);">کاربران</button>
                 <button class="btn" onclick="loadAdminChat()" style="font-size: 11px; padding: 8px 4px; background: var(--rose);">مدیریت چت</button>
+<button class="btn" onclick="loadPrivateConversationsList()" style="grid-column: span 3; background: var(--slate);">
+        صندوق پیام‌های خصوصی کاربران
+    </button>
             </div>
 
             <div id="adminResult"></div>
         </section>
+<!-- صفحه گفتگوی خصوصی -->
+<section id="privateChatPage" style="display: none;">
+    <h2 id="privateChatTitle" style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">
+        گفتگو با مدیریت
+    </h2>
+    
+    <button id="btnBackToAdmin" class="btn hidden" onclick="goToPage('adminPanel')" style="margin-bottom: 10px; background: var(--amber);">
+        برگشت به داشبورد
+    </button>
+
+    <div class="card" style="display: flex; flex-direction: column; height: 60vh;">
+        <div id="privateChatMessages" style="flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px;">
+            <!-- پیام‌های چت اینجا قرار می‌گیرند -->
+        </div>
+        
+        <div style="display: flex; gap: 8px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px;">
+            <input type="text" id="privateChatInput" placeholder="پیام خود را بنویسید..." style="flex: 1;">
+            <button class="btn" onclick="sendPrivateMsg()" style="background: var(--teal);">ارسال</button>
+        </div>
+    </div>
+</section>
     </main>
 
     <!-- نوار ناوبری پایین به همراه دکمه برجسته در مرکز -->
@@ -841,7 +1230,7 @@ function authData() {
 }
 
 /* =========================
-   Security / Session
+   Security / Session / OTP UI Flow
 ========================= */
 
 function handleInvalidSession(message) {
@@ -849,10 +1238,12 @@ function handleInvalidSession(message) {
     currentUser = null;
 
     document.getElementById('loginScreen').classList.remove('hidden');
+    backToStep1();
     showToast(message || 'نشست شما پایان یافته است. لطفاً دوباره وارد شوید.');
 }
 
-async function doLogin() {
+// مرحله اول ورود: ارسال کد
+async function requestOtpCode() {
     const name = document.getElementById('loginName').value.trim();
     const phone = normalizePhone(document.getElementById('loginPhone').value);
 
@@ -860,7 +1251,34 @@ async function doLogin() {
         return showToast('اطلاعات معتبر نیست؛ شماره باید ۱۱ رقمی و با ۰۹ شروع شود.');
     }
 
-    const user = await apiCall('login', { name, phone }, 'POST');
+    showToast('در حال ارسال کد تایید...');
+    const result = await apiCall('sendVerification', { name, phone }, 'POST');
+
+    if (result) {
+        showToast('کد تایید ارسال شد.');
+        document.getElementById('loginStep1').classList.add('hidden');
+        document.getElementById('loginStep2').classList.remove('hidden');
+    }
+}
+
+// بازگشت به مرحله اول
+function backToStep1() {
+    document.getElementById('loginStep2').classList.add('hidden');
+    document.getElementById('loginStep1').classList.remove('hidden');
+}
+
+// مرحله دوم ورود: تأیید نهایی کد یکبارمصرف
+async function doLogin() {
+    const name = document.getElementById('loginName').value.trim();
+    const phone = normalizePhone(document.getElementById('loginPhone').value);
+    const code = document.getElementById('loginOtpCode').value.trim();
+
+    if (!code) {
+        return showToast('لطفاً کد تایید ۵ رقمی را وارد کنید.');
+    }
+
+    showToast('در حال بررسی کد...');
+    const user = await apiCall('login', { name, phone, code }, 'POST');
 
     if (!user || !user.sessionToken) return;
 
@@ -872,7 +1290,7 @@ async function doLogin() {
     if (user.isNewUser) {
         showToast('حساب شما با موفقیت ایجاد شد.');
     } else {
-        showToast('با موفقیت وارد شدید.');
+        showToast('با موفقیت وارد شدید سرورم.');
     }
 }
 
@@ -1417,6 +1835,14 @@ function normalizePhone(value) {
         .replace(/^98/, '0');
 }
 
+document.getElementById('loginPhone').addEventListener('input', function(e) {
+    this.value = normalizePhone(this.value);
+});
+
+document.getElementById('loginOtpCode').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^\d]/g, '').substring(0, 5);
+});
+
 function escapeHtml(value) {
     return String(value ?? '')
         .replace(/&/g, '&amp;')
@@ -1448,6 +1874,131 @@ function toPersianNumber(value) {
     return String(value).replace(/\d/g, digit => '۰۱۲۳۴۵۶۷۸۹'[digit]);
 }
 
+// --- بخش چت خصوصی ---
+let currentPrivateTargetPhone = null;
+
+// باز کردن صفحه چت برای کاربر عادی
+function openPrivateChat() {
+    currentPrivateTargetPhone = null; // برای کاربر عادی null می‌مونه
+    document.getElementById('privateChatTitle').innerText = "گفتگو با مدیریت";
+    document.getElementById('btnBackToAdmin').classList.add('hidden');
+    goToPage('privateChatPage');
+    loadPrivateConversation();
+}
+
+// باز کردن چت توسط ادمین برای یک کاربر خاص
+function openPrivateChatForAdmin(phone, name) {
+    currentPrivateTargetPhone = phone;
+    document.getElementById('privateChatTitle').innerText = "گفتگو با " + name;
+    document.getElementById('btnBackToAdmin').classList.remove('hidden');
+    goToPage('privateChatPage');
+    loadPrivateConversation();
+}
+
+// دریافت پیام‌های چت
+async function loadPrivateConversation() {
+    const box = document.getElementById('privateChatMessages');
+    box.innerHTML = '<div style="text-align:center; color:var(--muted); font-size:12px;">در حال دریافت پیام‌ها...</div>';
+    
+    let reqData = { sessionToken: authData().sessionToken };
+    if (currentPrivateTargetPhone) {
+        reqData.targetPhone = currentPrivateTargetPhone;
+    }
+
+    const data = await apiCall('getPrivateConversation', reqData, 'GET');
+    
+    if (data) {
+        box.innerHTML = '';
+        if (data.length === 0) {
+            box.innerHTML = '<div style="text-align:center; color:var(--muted); font-size:12px;">هنوز پیامی رد و بدل نشده است.</div>';
+            return;
+        }
+
+        const isAdmin = (currentUser?.isAdmin === true);
+
+        data.forEach(msg => {
+            const div = document.createElement('div');
+            // منطق تشخیص پیام خودی
+            const isMe = (isAdmin && msg.senderRole === 'admin') || (!isAdmin && msg.senderRole === 'user');
+          
+            div.className = isMe ? 'chat-bubble me' : 'chat-bubble other';
+            
+            const timeStr = new Date(msg.createdAt).toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
+            
+            div.innerHTML = `
+                <div>${escapeHtml(msg.message)}</div>
+                <span class="chat-time">${timeStr}</span>
+            `;
+            box.appendChild(div);
+        });
+        
+        // اسکرول به پایین
+        box.scrollTop = box.scrollHeight;
+    }
+}
+
+// ارسال پیام
+async function sendPrivateMsg() {
+    const input = document.getElementById('privateChatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.disabled = true;
+
+    let reqData = {
+    sessionToken: authData().sessionToken,
+    message: msg
+};
+    
+    if (currentPrivateTargetPhone) {
+        reqData.targetPhone = currentPrivateTargetPhone;
+    }
+
+    const data = await apiCall('sendPrivateMessage', reqData, 'POST');
+    
+    input.disabled = false;
+    
+    if (data) { // اگر موفق بود (apiCall خروجی null نداد)
+        input.value = '';
+        loadPrivateConversation(); // بارگذاری مجدد
+    }
+}
+
+// دریافت لیست مکالمات (فقط برای ادمین)
+async function loadPrivateConversationsList() {
+    const resultDiv = document.getElementById('adminResult');
+    resultDiv.innerHTML = '<div style="text-align:center; padding:20px; font-size:13px; color:var(--muted);">در حال دریافت لیست پیام‌ها...</div>';
+
+    const data = await apiCall('getPrivateConversationsList', { sessionToken: authData().sessionToken }, 'GET');
+    
+    if (data) {
+        if (data.length === 0) {
+            resultDiv.innerHTML = '<div style="text-align:center; padding:20px; font-size:13px; color:var(--muted);">هیچ پیام خصوصی وجود ندارد.</div>';
+            return;
+        }
+
+        let html = '<div class="card"><h3 style="font-size:14px; margin-bottom:10px;">صندوق پیام‌های کاربران</h3><div style="display:flex; flex-direction:column; gap:8px;">';
+        
+        data.forEach(conv => {
+            html += `
+                <div style="border:1px solid var(--border); padding:10px; border-radius:8px; cursor:pointer;"
+                     onclick="openPrivateChatForAdmin('${conv.phone}', '${conv.name}')">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                        <strong>${conv.name || 'کاربر ناشناس'}</strong>
+                        <span style="font-size:11px; color:var(--muted);" dir="ltr">${conv.phone}</span>
+                    </div>
+                    <div style="font-size:12px; color:var(--slate); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        آخرین پیام: ${escapeHtml(conv.lastMessage)}
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div></div>';
+        resultDiv.innerHTML = html;
+    }
+}
+
 /* =========================
    Start app
 ========================= */
@@ -1456,3 +2007,5 @@ function toPersianNumber(value) {
     verifySavedSession();
 })();
 </script>
+</body>
+</html>

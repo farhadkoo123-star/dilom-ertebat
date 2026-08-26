@@ -1418,43 +1418,70 @@ async function publishAdminNews() {
 
 async function loadAdminPosts() {
     if (!currentUser?.isAdmin) return;
-
     const resultBox = document.getElementById('adminResult');
     resultBox.innerHTML = '<div class="card">در حال دریافت پست‌های در انتظار...</div>';
-
     const posts = await apiCall('getPendingPosts', authData());
-
     if (!posts || posts.length === 0) {
         resultBox.innerHTML = '<div class="card">پست جدیدی برای تأیید وجود ندارد.</div>';
         return;
     }
-
-    const typesFa = {
-        help: 'هم‌یاری',
-        business: 'کسب‌وکار',
-        need: 'نیازمندی',
-        event: 'رویداد'
-    };
-
+    const typesFa = { help: 'هم‌یاری', business: 'کسب‌وکار', need: 'نیازمندی', event: 'رویداد' };
     resultBox.innerHTML = posts.map(p => `
-        <div class="card">
-            <span class="tag">${escapeHtml(typesFa[p.type] || p.type || '')}</span>
-            <h3>${escapeHtml(p.title || '')}</h3>
-            <p>${escapeHtml(p.body || '')}</p>
-            <div class="meta">
-                ${escapeHtml(p.author || '')}
-                |
-                ${formatDate(p.createdAt)}
+        <div class="card" style="border: 1px solid var(--primary); padding-bottom: 15px;">
+            <div style="margin-bottom: 10px;">
+                <span class="tag" style="display:inline-block; margin-bottom:10px;">${escapeHtml(typesFa[p.type] || p.type || '')}</span>
+                <div class="meta" style="margin-bottom:10px;">ارسال کننده: ${escapeHtml(p.author || '')} | ${formatDate(p.createdAt)}</div>
+            </div>
+            
+            <div class="input-group" style="margin-bottom: 8px;">
+                <label style="font-size:12px; color:var(--muted);">عنوان مطلب:</label>
+                <input type="text" id="editTitle_${p.rowNumber}" value="${escapeHtml(p.title || '')}" style="width:100%; box-sizing:border-box;">
+            </div>
+            
+            <div class="input-group" style="margin-bottom: 8px;">
+                <label style="font-size:12px; color:var(--muted);">متن مطلب:</label>
+                <textarea id="editBody_${p.rowNumber}" rows="3" style="width:100%; box-sizing:border-box;">${escapeHtml(p.body || '')}</textarea>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 12px;">
+                <label style="font-size:12px; color:var(--muted);">لینک تصویر (اختیاری):</label>
+                <input type="text" id="editImage_${p.rowNumber}" placeholder="https://example.com/image.jpg" value="${p.imageUrl ? escapeHtml(p.imageUrl) : ''}" style="width:100%; direction: ltr; box-sizing:border-box;">
             </div>
 
             <div style="display:flex; gap:10px; margin-top:10px;">
-                <button class="btn" onclick="approvePost(${Number(p.rowNumber)})" style="background:var(--olive); flex:1;">تأیید</button>
-                <button class="btn" onclick="removePost(${Number(p.rowNumber)})" style="background:var(--rose); flex:1;">حذف</button>
+                <button class="btn" onclick="approveAndEditPost(${Number(p.rowNumber)})" style="background:var(--olive); flex:1;">ثبت ویرایش و تأیید</button>
+                <button class="btn" onclick="removePost(${Number(p.rowNumber)})" style="background:var(--rose); flex:1;">رد و حذف</button>
             </div>
         </div>
     `).join('');
 }
 
+// این تابع رو دقیقاً زیر تابع loadAdminPosts اضافه کن
+async function approveAndEditPost(rowNumber) {
+    const newTitle = document.getElementById(`editTitle_${rowNumber}`).value.trim();
+    const newBody = document.getElementById(`editBody_${rowNumber}`).value.trim();
+    const newImage = document.getElementById(`editImage_${rowNumber}`).value.trim();
+
+    if(!newTitle || !newBody) {
+        return showToast('عنوان و متن نمی‌توانند خالی باشند.');
+    }
+
+    const result = await apiCall('updatePostStatus', {
+        ...authData(),
+        rowNumber,
+        status: 'approved',
+        title: newTitle,
+        body: newBody,
+        imageUrl: newImage
+    }, 'POST');
+
+    if (result) {
+        showToast('پست با موفقیت ویرایش و تأیید شد.');
+        loadAdminPosts();
+        loadAll();
+        loadAdminStatsAndData();
+    }
+}
 async function approvePost(rowNumber) {
     const result = await apiCall('updatePostStatus', {
         ...authData(),
@@ -1580,6 +1607,7 @@ async function loadHomeData() {
             newsBox.innerHTML = news.slice(0, 2).map(p => `
                 <div class="card searchable">
                     <span class="tag">اطلاعیه</span>
+                    ${p.imageUrl ? `<img src="${escapeHtml(p.imageUrl)}" alt="تصویر" style="width:100%; height:150px; object-fit:cover; border-radius:8px; margin-bottom:10px;" onerror="this.style.display='none'">` : ''}
                     <h3>${escapeHtml(p.title || '')}</h3>
                     <p>${escapeHtml(shortText(p.body || '', 120))}</p>
                     <div class="meta">
@@ -1609,6 +1637,7 @@ async function loadHomeData() {
             recentPostsBox.innerHTML = allPosts.slice(0, 3).map(p => `
                 <div class="card searchable">
                     <span class="tag">${escapeHtml(typesFa[p.type] || p.type || '')}</span>
+                    ${p.imageUrl ? `<img src="${escapeHtml(p.imageUrl)}" alt="تصویر پست" style="width:100%; height:150px; object-fit:cover; border-radius:8px; margin-bottom:10px;" onerror="this.style.display='none'">` : ''}
                     <h3>${escapeHtml(p.title || '')}</h3>
                     <p>${escapeHtml(shortText(p.body || '', 120))}</p>
                     <div class="meta">
@@ -1625,24 +1654,20 @@ async function loadHomeData() {
 
 async function loadPosts(type, boxId) {
     const box = document.getElementById(boxId);
-
-    if (!box) return;
-
-    const action = type === 'news' ? 'getNews' : 'getPosts';
-    const data = type === 'news' ? {} : { type };
-
-    const posts = await apiCall(action, data);
-
-    if (posts && posts.length) {
-        const typesFa = {
-            help: 'هم‌یاری',
-            business: 'کسب‌وکار',
-            need: 'نیازمندی',
-            event: 'رویداد'
-        };
-
+    box.innerHTML = '<div class="card">در حال بارگذاری...</div>';
+    try {
+        const posts = type === 'news' ? await apiCall('getNews') : await apiCall('getPosts', { type });
+        if (!posts || posts.length === 0) {
+            box.innerHTML = '<div class="card">هیچ موردی یافت نشد.</div>';
+            return;
+        }
+        const typesFa = { help: 'هم‌یاری', business: 'کسب‌وکار', need: 'نیازمندی', event: 'رویداد' };
+        
         box.innerHTML = posts.map(p => `
             <div class="card searchable">
+                ${p.imageUrl ? `<div style="width: 100%; height: 180px; border-radius: 8px; margin-bottom: 12px; overflow: hidden; background-color: var(--surface);">
+                                    <img src="${escapeHtml(p.imageUrl)}" style="width: 100%; height: 100%; object-fit: cover;" alt="تصویر مطلب" onerror="this.style.display='none'">
+                                </div>` : ''}
                 ${p.type ? `<span class="tag">${escapeHtml(typesFa[p.type] || p.type)}</span>` : ''}
                 <h3>${escapeHtml(p.title || '')}</h3>
                 <p>${escapeHtml(p.body || '')}</p>
@@ -1652,11 +1677,10 @@ async function loadPosts(type, boxId) {
                 </div>
             </div>
         `).join('');
-    } else {
-        box.innerHTML = '<div class="empty">موردی یافت نشد.</div>';
+    } catch (e) {
+        box.innerHTML = '<div class="card" style="color:var(--rose)">خطا در بارگذاری اطلاعات</div>';
     }
 }
-
 /* =========================
    Chat
 ========================= */

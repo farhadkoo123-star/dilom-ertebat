@@ -2038,26 +2038,15 @@ function openImageModal(url) {
 
 // بستن تصویر
 function closeImageModal() {
-    document.getElementById('imageModal').style.display قدم سوم: آپدیت کردن کدهای رندر کارت‌ها
-حالا تو کدهای قبلی (تواب قدم سوم: آپدیت کردن کدهای رندر کارت‌ها
-حالا تو کدهای قبلی (توابعی مثل `loadHomeData` یا `loadPosts`)، اون خطی که عکس رو لود می‌کرد رو با این قطعه کد عوض کن. 
-من تگ `<img>` رو گذاشتم تو یه `<div style="position: relative">` تا بتونیم دکمه 🔍 رو بندازیم گوشه پایین سمت راستش:
-```javascript
-${p.imageUrl ? `
-<div style="position: relative; margin-bottom: 10px;">
-<img src="${escapeHtml(p.imageUrl)}" alt="تصویر" style="width:100%; height:150px; object-fit:cover; border-radius:8px; display: block;" onerror="this.parentElement.style.display='none'">
-
-<!-- دکمه بزرگنمایی -->
-<button onclick="openImageModal('${escapeHtml(p.imageUrl)}')" style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 5px; padding: 5px 8px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);" title="بزرگنمایی">
-🔍
-</button>
-</div>
-` : ''}
+    document.getElementById('imageModal').style.display = 'none';
+}
 </script>
+
 <!-- پنجره مودال برای بزرگنمایی تصویر -->
 <div id="imageModal" onclick="closeImageModal()" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; backdrop-filter: blur(3px);">
     <span style="position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; font-weight: bold; cursor: pointer;">&times;</span>
     <img id="fullSizeImage" src="" style="max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);" onclick="event.stopPropagation()">
 </div>
+
 </body>
 </html>

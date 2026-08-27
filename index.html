@@ -1607,7 +1607,10 @@ async function loadHomeData() {
             newsBox.innerHTML = news.slice(0, 2).map(p => `
                 <div class="card searchable">
                     <span class="tag">اطلاعیه</span>
-                    ${p.imageUrl ? `<img src="${escapeHtml(p.imageUrl)}" alt="تصویر" style="width:100%; height:150px; object-fit:cover; border-radius:8px; margin-bottom:10px;" onerror="this.style.display='none'">` : ''}
+                   ${p.imageUrl ? `<div style="position: relative; margin-bottom: 10px;">
+                    <img src="${escapeHtml(p.imageUrl)}" onclick="openImageModal('${escapeHtml(p.imageUrl)}')" alt="تصویر" style="width:100%; height:150px; object-fit:cover; border-radius:8px; display:block; cursor: pointer;" onerror="this.parentElement.style.display='none'">
+                    <button onclick="openImageModal('${escapeHtml(p.imageUrl)}')" style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 8px; width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);" title="بزرگنمایی">🔍</button>
+                </div>` : ''}
                     <h3>${escapeHtml(p.title || '')}</h3>
                     <p>${escapeHtml(shortText(p.body || '', 120))}</p>
                     <div class="meta">
@@ -1665,9 +1668,10 @@ async function loadPosts(type, boxId) {
         
         box.innerHTML = posts.map(p => `
             <div class="card searchable">
-                ${p.imageUrl ? `<div style="width: 100%; height: 180px; border-radius: 8px; margin-bottom: 12px; overflow: hidden; background-color: var(--surface);">
-                                    <img src="${escapeHtml(p.imageUrl)}" style="width: 100%; height: 100%; object-fit: cover;" alt="تصویر مطلب" onerror="this.style.display='none'">
-                                </div>` : ''}
+                ${p.imageUrl ? `<div style="position: relative; width: 100%; height: 180px; border-radius: 8px; margin-bottom: 12px; overflow: hidden; background-color: var(--surface);">
+                    <img src="${escapeHtml(p.imageUrl)}" onclick="openImageModal('${escapeHtml(p.imageUrl)}')" style="width: 100%; height: 100%; object-fit: cover; cursor: pointer;" alt="تصویر مطلب" onerror="this.parentElement.style.display='none'">
+                    <button onclick="openImageModal('${escapeHtml(p.imageUrl)}')" style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 8px; width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);" title="بزرگنمایی">🔍</button>
+                </div>` : ''}
                 ${p.type ? `<span class="tag">${escapeHtml(typesFa[p.type] || p.type)}</span>` : ''}
                 <h3>${escapeHtml(p.title || '')}</h3>
                 <p>${escapeHtml(p.body || '')}</p>

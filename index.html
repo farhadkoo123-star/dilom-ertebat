@@ -1702,207 +1702,7 @@ span[onclick]:not(button) {
 
 /* ---- Redesign supplementary press feedback ---- */
 button.rd-pressed { transform: scale(0.97) !important; }
-
-    /* ===== ULTRA-MODERN PREMIUM REDESIGN v2 ===== */
-    @keyframes gradShift {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    @keyframes floatY {0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-    @keyframes shimmer {0%{transform:translateX(-120%) skewX(-15deg)}100%{transform:translateX(320%) skewX(-15deg)}}
-    @keyframes pulse-dot {0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
-    @keyframes storyPulse {0%,100%{box-shadow:0 4px 12px rgba(13,148,136,.25)}50%{box-shadow:0 4px 22px rgba(56,189,248,.55)}}
-
-    .city-live-bar {
-      display:flex; align-items:center; justify-content:space-between;
-      background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(240,253,250,.75));
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(13,148,136,.18); border-radius: 22px;
-      padding: 12px 16px; margin-bottom: 16px;
-      box-shadow: 0 8px 24px -6px rgba(13,148,136,.15);
-    }
-    .city-live-info { display:flex; align-items:center; gap:10px; }
-    .city-live-icon {
-      width:40px; height:40px; border-radius:14px; font-size:19px;
-      background: linear-gradient(135deg,#ccfbf1,#bae6fd);
-      display:flex; align-items:center; justify-content:center;
-      box-shadow: 0 4px 10px -2px rgba(13,148,136,.3);
-      animation: floatY 3.5s ease-in-out infinite;
-    }
-    .city-live-text h4 { margin:0; font-size:13px; font-weight:900; color:var(--text-color,#0f172a); letter-spacing:-.2px; }
-    .city-live-text span { font-size:11px; color:#64748b; }
-    .weather-pill {
-      display:flex; align-items:center; gap:6px;
-      background: linear-gradient(135deg,#ecfdf5,#f0fdf4);
-      border:1px solid #bbf7d0; padding:6px 13px; border-radius:30px;
-      font-size:11.5px; font-weight:800; color:#166534;
-      box-shadow: 0 3px 10px -2px rgba(22,163,74,.2);
-    }
-
-    .stories-container {
-      display:flex; gap:14px; overflow-x:auto; padding:6px 2px 16px 2px;
-      margin-bottom:14px; scrollbar-width:none;
-    }
-    .stories-container::-webkit-scrollbar{display:none;}
-    .story-itemwebkit-scrollbar{display:none;}
-    .story-item align-items:center; gap:7px;
-      cursor:pointer; flex-shrink:0; transition:transform .2s;
-    }
-    .story-item:active{transform:scale(.9);}
-    .story-ring {
-      width:60px; height:60px; border-radius:50%; padding:2.5px;
-      background: conic-gradient(from 200deg, #0d9488, #38bdf8, #f59e0b, #e11d48, #0d9488);
-      display:flex; align-items:center; justify-content:center;
-      animation: storyPulse 3s ease-in-out infinite;
-    }
-    .story-ring.seen { background:#cbd5e1; animation:none; }
-    .story-inner {
-      width:100%; height:100%; background:var(--card-bg,#fff); border-radius:50%;
-      display:flex; align-items:center; justify-content:center; font-size:23px;
-    }
-    .story-title {
-      font-size:10.5px; font-weight:800; color:var(--text-color,#334155);
-      max-width:64px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-
-    .super-hero-banner {
-      background: linear-gradient(135deg,#042f2e 0%, #0d9488 35%, #0891b2 70%, #0284c7 100%);
-      background-size: 220% 220%; animation: gradShift 9s ease infinite;
-      border-radius: 28px; padding: 24px 20px; color:#fff;
-      position:relative; overflow:hidden; margin-bottom:22px;
-      box-shadow: 0 20px 44px -10px rgba(8,145,178,.5);
-    }
-    .super-hero-banner::before {
-      content:""; position:absolute; top:-60px; left:-40px; width:200px; height:200px;
-      background:radial-gradient(circle, rgba(255,255,255,.25) 0%, rgba(255,255,255,0) 70%); border-radius:50%;
-    }
-    .super-hero-banner::after {
-      content:""; position:absolute; bottom:-50px; right:-30px; width:170px; height:170px;
-      background:radial-gradient(circle, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 70:0; left:0; width }
-    .hero-shine {
-      position:absolute; top:0; left:0; width:60px; height:100%;
-      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.28), rgba(255,255,255,0));
-      animation: shimmer 3.2s ease-in-out infinite; pointer-events:none; z-index:1;
-    }
-    .super-hero-top {
-      display:flex; justify-content:space-between; align-items:center;
-      margin-bottom:14px; position:relative; z-index:2;
-    }
-    .super-hero-badge {
-      background:rgba(255,255,255,.2); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-      padding:5px 13px; border-radius:20px; font-size:11px; font-weight:800;
-      border:1px solid rgba(255,255,255,.35); display:flex; align-items:center; gap:5px;
-    }
-    .super-hero-title {
-      font-size:21:21 font-weight:900; line-height:1.45; margin:0 0 7px 0;
-      letter-spacing:-.3px; position:relative; z-index:2;
-      text-shadow: 0 2px 12px rgba(0,0,0,.25);
-    }
-    .super-hero-desc {
-      font-size:12.5px; opacity:.93; line-height:1.7; margin:0 0 18px 0;
-      position:relative; z-index:2;
-    }
-    .super-hero-actions { display:flex; gap:10px; position:relative; z-index:2; }
-    .btn-action-glow {
-      background:#fff; color:#0f766e; font-weight:900; font-size:12.5px;
-      padding:11px 22px; border-radius:16px; border:none;
-      box-shadow:0 10px 22px rgba(0,0,0,.22); cursor:pointer;
-      display:inline-flex; align-items:center; gap:6px;
-      transition:all .25s cubic-bezier(.4,0,.2,1); font-family:inherit;
-    }
-    .btn-action-glow:active{transform:scale(.95);}
-    .btn-action-glass {
-      background:rgba(255,255,255,.18); color:#fff; font-weight:800; font-size:12.5px;
-      padding:11px 19px; border-radius:16px; border:1px solid rgba(255,255,255,.4);
-      backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-      cursor:pointer; transition:all .2s; font-family:inherit;
-    }
-    .btn-action-glass:active{background:rgba(255,255,255,.32);}
-
-    .services-grid-8 {
-      display:grid; grid-template-columns:repeat(4,1fr); gap:11px; margin-bottom:24px;
-    }
-    .service-app-card {
-      background:var(--card-bg,#fff); border:1px solid var(--border-color,#e2e8f0);
-      border-radius:20px; padding:15px 6px 13px; text-align:center; cursor:pointer;
-      transition:all .25s cubic-bezier(.4,0,.2,1);
-      box-shadow:0 4px 16px rgba(0,0,0,.04); position:relative; overflow:hidden;
-    }
-    .service-app-card::after {
-      content:""; position:absolute; inset:auto 0 0 0; height:3px;
-      background:linear-gradient(90deg,#0d9488,#38bdf8);
-      opacity:0; transition:opacity .25s;
-    }
-    .service-app-card:active{transform:scale(.93);}
-    .service-app-card:hover{border-color:#99f6e4; transform:translateY(-3px); box-shadow:0 10px 22px -6px rgba(13,148,136,.25);}
-    .service-app-card:hover::after{opacity:1;}
-    .app-icon-circle {
-      width:50px; height:50px; border-radius:16px;
-      display:flex; align-items:center; justify-content:center;
-      margin:0 auto 8px auto; transition:transform .25s cubic-bezier(.34,1.56,.64,1);
-      box-shadow:0 6px 14px -3px rgba(0,0,0,.12);
-    }
-    .service-app-card:hover .app-icon-circle{transform:scale(1.12) rotate(5deg);}
-    .service-app-card span {
-      font-size:11.5px; font-weight:800; color:var(--text-color,#1e293b);
-      display:block; line-height:1.3;
-    }
-    .service-badge-mini {
-      position:absolute; top:7px; left:7px; background:linear-gradient(135deg,#ef4444,#f97316);
-      color:#fff; font-size:9px; font-weight:900; padding:2px 7px; border-radius:10px;
-      line-height:1.4; box-shadow:0 3px 8px rgba(239,68,68,.4);
-    }
-
-    .live-ticker-strip {
-      background:linear-gradient(90deg,#ecfdf5 0%, #f0fdf4 100%);
-      border:1px solid #a7f3d0; border-radius:16px; padding:11px 14px;
-      margin-bottom:22px; display:flex; align-items:center; gap:10px;
-      box-shadow: 0 4px 14px -4px rgba(16,185,129,.2);
-    }
-    .live-ticker-strip .badge-pulse {
-      background:linear-gradient(135deg,#10b981,#059669); color:#fff;
-      font-size:10px; font-weight:900; padding:4px 9px; border-radius:8px;
-      display:flex; align-items:center; gap:4px; box-shadow:0 3px 8px rgba(16,185,129,.4);
-    }
-    .live-ticker-strip .badge-pulse::before {
-      content:""; width:6px; height:6px; background:#fff; border-radius:50%;
-      animation:pulse-dot 1.5s infinite;
-    }
-    .ticker-text {
-      font-size:11.5px; font-weight:700; color:#065f46; flex:1;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-
-    .modern-section-header {
-      display:flex; justify-content:space-between; align-items:center; margin:20px 2px 12px 2px;
-    }
-    .modern-section-header .sec-title-group{display:flex; align-items:center; gap:8px;}
-    .sec-accent-bar {
-      width:4px; height:17px; border-radius:4px;
-      background:linear-gradient(180deg,#0d9488,#38bdf8);
-      box-shadow:0 0 8px rgba(13,148,136,.5);
-    }
-    .modern-section-header h3 {
-      font-size:15px; font-weight:900; color:var(--text-color,#0f172a); margin:0; letter-spacing:-.2px;
-    }
-    .modern-section-header .view-all-pill {
-      font-size:11.5px; color:#0d9488; font-weight:800; background:#f0fdfa;
-      padding:5px 13px; border-radius:14px; border:1px solid #ccfbf1;
-      cursor:pointer; display:flex; align-items:center; gap:4px;
-      transition:all .2s; box-shadow:0 2px 8px rgba(13,148,136,.1);
-    }
-    .modern-section-header .view-all-pill:hover{background:#0d9488; color:#fff; transform:translateX(-3px);}
-
-    .promo-sub-banner {
-      background:linear-gradient(135deg,#0f172a 0%, #1e293b 55%, #155e75 100%);
-      color:#fff; border-radius:22px; padding:17px;
-      display:flex; align-items:center; justify-content:space-between;
-      margin-bottom:22px; box-shadow:0 12px 28px -8px rgba(15,23,42,.4);
-      position:relative; overflow:hidden;
-    }
-    . position:absolute-banner::before {
-      content:""; position:absolute; top:-40px; left:-20px; width:130px; height:130px;
-      background:radial-gradient(circle, rgba(56,189,248,.3), transparent 70%); border-radius:50%;
-    }
-
-  </style>
+</style>
 </head>
 <body>
 
@@ -1973,188 +1773,81 @@ button.rd-pressed { transform: scale(0.97) !important; }
     <main>
         <!-- صفحه خانه -->
         <section id="home" class="active">
+            <div class="home-banner">
+                <span class="banner-badge">
+                    <svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor;"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l-8.5-4.25L12 11.5l8.5-4.75L12 11z"/></svg>
+                    سامانه رسمی همشهریان دیلم
+                </span>
+                <h2 id="homeWelcomeTitle">سلام 👋 به دیلم ارتباط خوش آمدید</h2>
+                <p>پل ارتباطی، نیازمندی‌ها، رویدادها و اخبار دیلمان در یک نگاه.</p>
+                <div class="banner-actions">
+                    <button class="banner-btn primary" onclick="openSheet()">
+                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        ثبت آگهی جدید
+                    </button>
+                    <button class="banner-btn ghost" onclick="goToPage('news')">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        تازه‌ترین اخبار
+                    </button>
+                </div>
+            </div>
 
-      <!-- نوار زنده وضعیت شهر و آب‌وهوای بندر دیلم -->
-      <div class="city-live-bar">
-        <div class="city-live-info">
-          <div class="city-live-icon">🌊</div>
-          <div class="city-live-text">
-            <h4>بندر تاریخی دیلم</h4>
-            <span>ساحل نیلگون خلیج فارس</span>
-          </div>
-        </div>
-        <div class="weather-pill">
-          <span>☀️ ۲۹°C</span>
-          <span style="opacity:.5;">|</span>
-          <span>دریا آرام</span>
-        </div>
+    <!-- بنر وضعیت احراز هویت -->
+    <div id="homeVerifyBanner" class="verify-banner hidden" onclick="goToPage('verifyPage')">
+      <div class="verify-banner-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/><span id="homeVerifyBannerText">برای دسترسی به تمام امکانات، احراز هویت را تکمیل کنید.</span>
       </div>
-
-      <!-- استوری‌های رویدادها و اخبار دی="stories-container">
-        class="stories-container">
-        <div class="story-item" onclick="goToPage('news')">
-          <div class="story-ring"><div class="story-inner">📰</div></div>
-          <span class="story-title">خبر فوری</span>
-        </div>
-        <div class="story-item" onclick="goToPage('needs')">
-          <div class="story-ring"><div class="story-inner">🛍️</div></div>
-          <span class="story-title">بازار ساحلی</span>
-        </div>
-        <div class="story-item" onclick="goToPage('help')">
-          <div class="story-ring"><div class="story-inner">🤝</div></div>
-          <span class="story-title">هم‌یاری دیلم</span>
-        </div>
-        <div class="story-item" onclick="goToPage('business')">
-          <div class="story-ring"><div class="story-inner">🏪</div></div>
-          <span class="story-title">کسب‌وکارها</span>
-        </div>
-        <div class="story-item" onclick="openSheet()">
-          <div class="story-ring"><div class="story-inner">➕</div></div>
-          <span class="story-title">ثبت آگهی</span>
-        </div>
-        <div class="story-item" onclick="goToPage('verifyPage')">
-          <div class="story-ring seen"><div class="story-inner">🛡️</div></div>
-          <span class="story-title">احراز هویت</span>
-        </div>
+      <div class="verify-arrow">
+        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
       </div>
+    </div>
 
-      <!-- کارت هیرو اصلی با گرادیان متحرک اقیانوسی و افکت درخشش -->
-      <div class="super-hero-banner">
-        <div class="hero-shine"></div>
-        <div class="super-hero-top">
-          <span class="super-hero-badge">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09  .26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            سامانه جامع دیلم ارتباط
-          </span>
-          <span style="font-size:11.5px; opacity:.9; font-weight:700;">نسخه هوشمند</span>
-        </div>
-        <h2 class="super-hero-title" id="homeWelcomeTitle">سلام 👋 به دیلم ارتباط خوش آمدید</h2>
-        <p class="super-hero-desc">پل ارتباطی یکپارچه، نیازمندی‌ها، صید و شیلات، هم‌یاری و تازه‌ترین رویدادهای بندر دیلم.</p>
-        <div class="super-hero-actions">
-          <button type="button" class="btn-action-glow" onclick="openSheet()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-            ثبت سریع آگهی
-          </button>
-          <button type="button" class="btn-action-glass" onclick="goToPage('news')">تازه‌ترین خبرها</button>
-        </div>
-      </div>
+            <!-- دسترسی سریع -->
+            <div class="section-header">
+                <h3>دسترسی سریع</h3>
+            </div>
+            <div class="quick-grid">
+                <div class="quick-btn" onclick="goToPage('news')">
+                    <div class="qb-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    </div>
+                    <span>اخبار</span>
+                </div>
+                <div class="quick-btn" data-accent="rose" onclick="goToPage('help')">
+                    <div class="qb-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                    <span>هم‌یاری</span>
+                </div>
+                <div class="quick-btn" data-accent="amber" onclick="goToPage('needs')">
+                    <div class="qb-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm2 4h12v2H6zm3 4h6v2H9z"/></svg>
+                    </div>
+                    <span>نیازمندی</span>
+                </div>
+                <div class="quick-btn" data-accent="indigo" onclick="goToPage('business')">
+                    <div class="qb-icon">
+                        <svg viewBox="0 0  d="24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                    </div>
+                    <span>کسب‌وکار</span>
+                </div>
+            </div>
 
-      <!-- بنر احراز هویت هوشمند -->
-      <div id="homeVerifyBanner" class="verify-banner hidden" onclick="goToPage('verifyPage')" style="margin-bottom: 20px;">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <span id="homeVerifyBannerText" style="font-size:12.5px; font-weight:600;">برای دسترسی به تمام امکانات، احراز هویت را تکمیل کنید.</span>
-        </div>
-        <span style="font-size:16px;">‹</span>
-      </div>
+            <!-- آخرین اطلاعیه‌ها -->
+            <div class="section-header">
+                <h3>تازه‌ترین خبرها</h3>
+                <a onclick="goToPage('news')">مشاهده همه
+                    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                </a>
+            </div>
+            <div id="homeRecentNews"></div>
 
-      <!-- نوار زنده اطلاعیه‌ها -->
-      <div class="live-ticker-strip">
-        <span class="badge-pulse">زنده</span>
-        <span class="ticker-text">گمرک و اسکله صیادی دیلم فعال • بازار کویتی‌ها باز است</span>
-      </div>
-
-      <!-- شبکه ۸ خدمتی اپلیکیشن دیلم ارتباط -->
-      <div class="modern-section-header">
-        <div class="sec-title-group">
-          <div class="sec-accent-bar"></div>
-          <h3>خدمات و دسترسی سریع</h3>
-        </div>
-      </div>
-
-      <div class="services-grid-8">
-        <div class="service-app-card" onclick="goToPage('news')">
-          <div class="app-icon-circle" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd); color:#0284c7;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-          </div>
-          <span>اخبار دیلم</span>
-        </div>
-
-        <div class="service-app-card" onclick="goToPage('help')">
-          <span class="service-badge-mini">ویژه</span>
-          <div class="app-icon-circle" style="background:linear-gradient(135deg,#ffe4e6,#fecdd3); color:#e11d48;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.57.78 1.06-1.06a5.5 5.5>
-          <span>هم‌یاری</span>
-        </div>
-
-        <div class="service-app-card" onclick="goToPage('needs')">
-          <div class="app-icon-circle" style="background:linear-gradient(135deg,#fef3c7,#fde68a); color:#d97706;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-          </div>
-          <span>نیازمندی‌ها</span>
-        </div>
-
-        <div class="service-app-card" onclick="goToPage('business')">
-          <div class="app-icon-circle" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe); color:#7c3aed;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-          </div>
-          <span>کسب‌وکار</span>
-        </div>
-
-        <div class="service-app-card" onclick="openSheet()">
-          <div class="app-icon-circle" style="background:linear-gradient(135deg,#ccfbf1,#99f6e4); color:#0d9488;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-          </div>
-          <span>درج آگهی</span>
-        </div>
-
-        <div class="service-app-card" onclick="goToPage('verifyPage')">
-          <div class="app-icon-circle" style="background:linear-gradient(135deg,#f1f5f9,#e2e8f0); color:#475569;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <span>تأیید هویت</span>
-        </div>
-
-        <div class="service-app-card" onclick="goToPage('profile')">
-          <div class="app-icon-circle" style="background:linear-gradient(135deg,#ffedd5,#fed7aa); color:#ea580c;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <span>حساب من</span>
-        </div>
-
-        <div class="service-app-card" onclick="goToPage('contactModal')">
-          <div class="app-icon-circle" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8); color:#db2777;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          </div>
-          <span>پشتیبانی</span>
-        </div>
-      </div>
-
-      <!-- بنر ویژه همشهریان دیلمی -->
-      <div class="promo-sub-banner">
-        <div>
-          <div style="font-size:11px; color:#38bdf8; font-weight:800; margin-bottom:4px;">همبستگی و یاری شهروندی</div>
-          <div style="font-size:14px; font-weight:900; margin-bottom:4px;">نیازمندان و کارآفرینان دیلم را دریابیم</div>
-          <div style="font-size:11.5px; opacity:.82;">ثبت نام و مشارکت رایگان در پویش‌های هم‌یاری</div>
-        </div>
-        <button type="button" class="btn-action-glow" style="padding:8px 14px; font-size:11.5px; white-space:nowrap;" onclick="goToPage('help')">مشاهده پویش‌ها</button>
-      </div>
-
-      <!-- تازه‌ترین خبرها -->
-      <div class="modern-section-header">
-        <div class="sec-title-group">
-          <div class="sec-accent-bar"></div>
-          <h3>تازه‌ترین خبرهای دیلم</h3>
-        </div>
-        <div class="view-all-pill" onclick="goToPage('news')">
-          <span>مشاهده همه</span><span>‹</span>
-        </div>
-      </div>
-      <div id="homeRecentNews" style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;"></div>
-
-      <!-- تازه‌ترین آگهی‌ها و رویدادها -->
-      <div class="modern-section-header">
-        <div class="sec-title-group">
-          <div class="sec-accent-bar"></div>
-          <h3>تازه‌ترین آگهی‌ها و نیازمندی‌ها</h3>
-        </div>
-        <div class="view-all-pill" onclick="goToPage('needs')">
-          <span>مشاهده همه</span><span>‹</span>
-        </div>
-      </div>
-      <div id="homeRecentPosts" style="display:flex; flex-direction:column; gap:12px;"></div>
-
-    </section>
+            <!-- آخرین پست‌ها -->
+            <div class="section-header" style="margin-top: 15px;">
+                <h3>تازه ترین آگهی‌ها و رویدادها</h3>
+            </div>
+            <div id="homeRecentPosts"></div>
+        </section>
 
         <!-- اطلاعیه‌ها -->
         <section id="news">
